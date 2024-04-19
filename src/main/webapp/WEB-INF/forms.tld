@@ -15,5 +15,15 @@
                 <rtexprvalue>true</rtexprvalue>
             </attribute>
         </tag>
+        <tag>
+            <name>script</name>
+            <tag-class>sidd33.turboengine.forms.taglibs.Script</tag-class>
+            <body-content>empty</body-content>
+        </tag>
+        <tag>
+            <name>style</name>
+            <tag-class>sidd33.turboengine.forms.taglibs.Style</tag-class>
+            <body-content>empty</body-content>
+        </tag>
 </taglib>
 
