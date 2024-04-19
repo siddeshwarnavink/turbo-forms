@@ -5,7 +5,6 @@ import sidd33.turboengine.forms.type.FieldGenerator;
 
 public class DatePicker implements FieldGenerator {
     private static boolean scriptInitilized = false;
-    private static boolean styleInitilized = false;
 
     @Override
     public String renderContent(FormField formField) {
@@ -48,10 +47,7 @@ public class DatePicker implements FieldGenerator {
     public String renderStyles(FormField formField) {
         StringBuilder builder = new StringBuilder();
 
-        if(!styleInitilized) {
-            builder.append("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css\">");
-        }
-        styleInitilized = true;
+        builder.append("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css\">");
 
         return builder.toString();
     }

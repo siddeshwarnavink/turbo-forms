@@ -4,18 +4,24 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import sidd33.turboengine.forms.taglibs.Style;
+import sidd33.turboengine.forms.type.FieldGenerator;
 import sidd33.turboengine.forms.type.FormData;
+import sidd33.turboengine.forms.type.FormFieldType;
 
 public class WithFormProcessor implements HandlerInterceptor {
     public static Class<? extends FormData> formDataClass;
     public static List<FormField> formFields = new ArrayList<>();
+    private static Set<FormFieldType> styleInitilized = new HashSet<>();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -41,6 +47,20 @@ public class WithFormProcessor implements HandlerInterceptor {
             for (Annotation annotation : annotations) {
                 if (annotation.annotationType() == FormField.class) {
                     FormField formFieldAnnotation = (FormField) annotation;
+
+                    if (FormFieldGeneratorProcessor.generators.containsKey(formFieldAnnotation.fieldType())
+                            && !styleInitilized.contains(formFieldAnnotation.fieldType())) {
+                        FieldGenerator generator = FormFieldGeneratorProcessor.generators
+                                .get(formFieldAnnotation.fieldType());
+
+                        String styleRender = generator.renderStyles(formFieldAnnotation);
+                        if (styleRender != null) {
+                            Style.builder.append(styleRender);
+                        }
+
+                        styleInitilized.add(formFieldAnnotation.fieldType());
+                    }
+
                     formFields.add(formFieldAnnotation);
                 }
             }

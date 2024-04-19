@@ -42,11 +42,6 @@ public class FormControl extends SimpleTagSupport {
                         Script.builder.append(renderedScript);
                     }
 
-                    String renderedStyle = generator.renderStyles(field);
-                    if (renderedStyle != null) {
-                        Style.builder.append(renderedStyle);
-                    }
-
                     rendered.add(field.name());
                 }
             } else {
