@@ -6,12 +6,19 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
-import sidd33.turboengine.forms.data.FormFieldType;
+import sidd33.turboengine.forms.fields.TextField;
 import sidd33.turboengine.forms.type.FieldGenerator;
+import sidd33.turboengine.forms.type.FormFieldType;
 
 @Component
 public class FormFieldGeneratorProcessor implements BeanPostProcessor {
-    public static HashMap<FormFieldType, FieldGenerator> generators = new HashMap<>();
+    public static HashMap<FormFieldType, FieldGenerator> generators;
+
+    public FormFieldGeneratorProcessor() {
+        generators = new HashMap<>();
+
+        generators.put(FormFieldType.TEXTINPUT, new TextField());
+    }
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {

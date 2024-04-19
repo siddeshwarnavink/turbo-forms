@@ -11,7 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import sidd33.turboengine.forms.data.FormData;
+import sidd33.turboengine.forms.type.FormData;
 
 public class WithFormProcessor implements HandlerInterceptor {
     public static Class<? extends FormData> formDataClass;

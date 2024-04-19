@@ -1,14 +1,8 @@
-package sidd33.turboengine.forms.test.fields;
-
-import org.springframework.stereotype.Component;
+package sidd33.turboengine.forms.fields;
 
 import sidd33.turboengine.forms.annotation.FormField;
-import sidd33.turboengine.forms.annotation.FormFieldGenerator;
-import sidd33.turboengine.forms.data.FormFieldType;
 import sidd33.turboengine.forms.type.FieldGenerator;
 
-@Component
-@FormFieldGenerator(type = FormFieldType.TEXTINPUT)
 public class TextField implements FieldGenerator { 
 	@Override
 	public String renderContent(FormField formField) {

@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import sidd33.turboengine.forms.data.FormFieldType;
+import sidd33.turboengine.forms.type.FormFieldType;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
