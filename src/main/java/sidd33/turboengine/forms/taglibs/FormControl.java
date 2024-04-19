@@ -7,7 +7,9 @@ import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 import lombok.Setter;
 import sidd33.turboengine.forms.annotation.FormField;
+import sidd33.turboengine.forms.annotation.FormFieldGeneratorProcessor;
 import sidd33.turboengine.forms.annotation.WithFormProcessor;
+import sidd33.turboengine.forms.type.FieldGenerator;
 
 public class FormControl extends SimpleTagSupport {
     @Setter
@@ -22,7 +24,13 @@ public class FormControl extends SimpleTagSupport {
 
             if (optField.isPresent()) {
                 FormField field = optField.get();
-                getJspContext().getOut().write("Field = " + field.toString());
+                FieldGenerator generator =  FormFieldGeneratorProcessor.generators.get(field.fieldType());
+
+                if(generator == null) {
+                    throw new JspException("Field Generator not configured for type " + field.fieldType());
+                }
+
+                getJspContext().getOut().write(generator.renderContent(field));
             } else {
                 throw new JspException("FormField not found in FormData");
             }
