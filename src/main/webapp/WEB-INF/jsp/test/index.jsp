@@ -2,4 +2,4 @@
 
 <h1>Hello JPS!</h1>
 
-<turboforms:control />
+<turboforms:control name="name" />

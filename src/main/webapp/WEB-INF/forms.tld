@@ -9,6 +9,11 @@
             <name>control</name>
             <tag-class>sidd33.turboengine.forms.taglibs.FormControl</tag-class>
             <body-content>empty</body-content>
+            <attribute>
+                <name>name</name>
+                <required>true</required>
+                <rtexprvalue>true</rtexprvalue>
+            </attribute>
         </tag>
 </taglib>
 

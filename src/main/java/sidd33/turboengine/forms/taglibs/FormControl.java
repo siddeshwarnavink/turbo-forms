@@ -1,18 +1,33 @@
 package sidd33.turboengine.forms.taglibs;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
+import lombok.Setter;
+import sidd33.turboengine.forms.annotation.FormField;
 import sidd33.turboengine.forms.annotation.WithFormProcessor;
 
 public class FormControl extends SimpleTagSupport {
+    @Setter
+    private String name;
+
     @Override
     public void doTag() throws JspException, IOException {
         if (WithFormProcessor.formDataClass != null) {
-            getJspContext().getOut().write("Got the POJO");
+            Optional<FormField> optField = WithFormProcessor.formFields.stream()
+                    .filter(f -> f.name().equals(name))
+                    .findFirst();
+
+            if (optField.isPresent()) {
+                FormField field = optField.get();
+                getJspContext().getOut().write("Field = " + field.toString());
+            } else {
+                throw new JspException("FormField not found in FormData");
+            }
         } else {
-            getJspContext().getOut().write("No POJO found!");
+            throw new JspException("No FormData class specified");
         }
     }
 }
