@@ -13,6 +13,7 @@ public class RichText implements FieldGenerator {
         if (value instanceof String) {
             strValue = (String) value;
         }
+        String height = config.containsKey("height") ? (String) config.get("height") : "300px";
 
         StringBuilder builder = new StringBuilder();
 
@@ -21,7 +22,8 @@ public class RichText implements FieldGenerator {
                 .append("<label class=\"form-label\">" + formField.label() + "</label>");
         builder.append("<input type=\"hidden\" id=\"" + formField.name() + "-editorContent\" name=\""
                 + formField.name() + "\" value=\"" + strValue + "\">");
-        builder.append("<div class=\"form-control\" id=\"" + formField.name() + "-editor\">");
+        builder.append("<div class=\"form-control\" id=\"" + formField.name() + "-editor\"");
+        builder.append("style=\"height:" + height + ";\">");
         builder.append("</div>\n");
         if (errorMessage != null) {
             builder.append("<div class=\"invalid-feedback d-block\">" + errorMessage + "</div>");
@@ -39,7 +41,7 @@ public class RichText implements FieldGenerator {
         StringBuilder builder = new StringBuilder();
 
         if (!initilized) {
-            builder.append("<script src=\"https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.js\"></script>");
+            builder.append("<script src=\"https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.0/quill.min.js\"></script>");
             builder.append("<script src=\"https://unpkg.com/turndown/dist/turndown.js\"></script>");
             builder.append(
                     "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js\"></script>");

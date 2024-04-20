@@ -6,6 +6,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,14 +27,16 @@ public class TestController {
 
     @PostMapping(value = "/")
     @WithForm(TestForm.class)
-    public String postTestRoot(@Valid TestForm formData, BindingResult result, Model model) throws JsonProcessingException {
-        model.addAttribute("formData", formData);
+    public ModelAndView postTestRoot(@Valid TestForm formData, BindingResult result) {
+        ModelAndView modelAndView = new ModelAndView();
 
         if (result.hasErrors()) {
-            return "test/index";
+            modelAndView.setViewName("test/index");
+            modelAndView.addObject("formData", formData);
+            return modelAndView;
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(formData);
+        modelAndView.setView(new MappingJackson2JsonView());
+        return modelAndView;
     }
 }
