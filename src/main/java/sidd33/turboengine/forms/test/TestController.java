@@ -24,7 +24,6 @@ public class TestController {
     @WithForm(TestForm.class)
     public String postTestRoot(@Valid TestForm formData, BindingResult result, Model model) {
         model.addAttribute("formData", formData);
-        System.out.println("formdata=" + formData);
 
         if (result.hasErrors()) {
             return "test/index";

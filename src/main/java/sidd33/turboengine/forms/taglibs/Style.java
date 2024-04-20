@@ -6,9 +6,13 @@ import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 
 public class Style extends SimpleTagSupport {
-    public static StringBuilder builder = new StringBuilder();
+    public StringBuilder builder = new StringBuilder();
 
-    @Override
+    public StringBuilder getBuilder() {
+		return builder;
+	}
+
+	@Override
     public void doTag() throws JspException, IOException {
         getJspContext().getOut().write(builder.toString());
     }

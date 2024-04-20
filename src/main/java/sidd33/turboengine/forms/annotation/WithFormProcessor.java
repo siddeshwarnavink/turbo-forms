@@ -13,6 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import sidd33.turboengine.forms.data.RenderingStateHolder;
 import sidd33.turboengine.forms.taglibs.Style;
 import sidd33.turboengine.forms.type.FieldGenerator;
 import sidd33.turboengine.forms.type.FormData;
@@ -26,6 +27,10 @@ public class WithFormProcessor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+
+        RenderingStateHolder stateHolder = new RenderingStateHolder();
+        request.setAttribute("formState", stateHolder);
+
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
@@ -33,13 +38,13 @@ public class WithFormProcessor implements HandlerInterceptor {
             if (method.isAnnotationPresent(WithForm.class)) {
                 WithForm customAnnotation = method.getAnnotation(WithForm.class);
                 formDataClass = customAnnotation.value();
-                extractFormFields();
+                extractFormFields(stateHolder);
             }
         }
         return true;
     }
 
-    private void extractFormFields() {
+    private void extractFormFields(RenderingStateHolder stateHolder) {
         Field[] fields = formDataClass.getDeclaredFields();
 
         for (Field field : fields) {
@@ -83,7 +88,7 @@ public class WithFormProcessor implements HandlerInterceptor {
 
                         String styleRender = generator.renderStyles(formFieldAnnotation);
                         if (styleRender != null) {
-                            Style.builder.append(styleRender);
+                            stateHolder.getStyle().getBuilder().append(styleRender);
                         }
 
                         styleInitilized.add(formFieldAnnotation.fieldType());

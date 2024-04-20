@@ -1,5 +1,6 @@
 package sidd33.turboengine.forms.data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,21 +9,34 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
-@Component
-public class RenderingStateHolder {
-    private static Map<String, Object> model;
-    private static Map<String, String> errors = new HashMap<>();
+import sidd33.turboengine.forms.taglibs.Script;
+import sidd33.turboengine.forms.taglibs.Style;
 
-    public static Map<String, String> getErrors() {
-        return errors;
+@Component
+public class RenderingStateHolder implements Serializable {
+    private Script script = new Script();
+    private Style style = new Style();
+	private Map<String, Object> model;
+    private Map<String, String> errors = new HashMap<>();
+
+    public Style getStyle() {
+        return style;
     }
 
-    public static Map<String, Object> getModel() {
+    public Script getScript() {
+        return script;
+    }
+
+    public Map<String, Object> getModel() {
         return model;
     }
 
-    public static void setModel(Map<String, Object> model) {
-        RenderingStateHolder.model = model;
+    public Map<String, String> getErrors() {
+        return errors;
+    }
+
+    public void setModel(Map<String, Object> model) {
+        this.model = model;
 
         for (String attributeName : model.keySet()) {
             if (model.get(attributeName) instanceof BindingResult) {

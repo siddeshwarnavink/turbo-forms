@@ -9,11 +9,13 @@ import sidd33.turboengine.forms.data.RenderingStateHolder;
 
 public class ValidationInterceptor implements HandlerInterceptor {
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView)
             throws Exception {
 
-        if(modelAndView != null && modelAndView.getModel() != null) {
-            RenderingStateHolder.setModel(modelAndView.getModel());
+        RenderingStateHolder stateHolder = (RenderingStateHolder) request.getAttribute("formState");
+        if (modelAndView != null && modelAndView.getModel() != null && stateHolder != null) {
+            stateHolder.setModel(modelAndView.getModel());
         }
 
     }

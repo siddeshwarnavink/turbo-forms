@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 import lombok.Setter;
 import sidd33.turboengine.forms.annotation.FormField;
@@ -23,7 +25,15 @@ public class FormControl extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException, IOException {
-        Map<String, String> errors = RenderingStateHolder.getErrors();
+
+        PageContext pageContext = (PageContext) getJspContext();
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        RenderingStateHolder stateHolder = (RenderingStateHolder) request.getAttribute("formState");
+        if(stateHolder == null) {
+            throw new JspException("RenderingState not found in request");
+        }
+
+        Map<String, String> errors = stateHolder.getErrors();
 
         if (WithFormProcessor.formDataClass != null) {
             Optional<FormField> optField = WithFormProcessor.formFields.stream()
@@ -44,7 +54,7 @@ public class FormControl extends SimpleTagSupport {
                 if (!rendered.contains(field.name())) {
                     String renderedScript = generator.renderScripts(field);
                     if (renderedScript != null) {
-                        Script.builder.append(renderedScript);
+                        stateHolder.getScript().getBuilder().append(renderedScript);
                     }
 
                     rendered.add(field.name());
