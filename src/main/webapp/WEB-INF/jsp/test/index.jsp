@@ -6,10 +6,12 @@
         <title>TurboForm test</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <turboforms:style />
+
+        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     </head>
     <body class="container">
         <h3>Hello JPS!</h3>
-        <form:form modelAttribute="formData" method="POST">
+        <form:form hx-boost="true" modelAttribute="formData" method="POST">
             <turboforms:control name="name" />
             <turboforms:control name="dateTime" />
 

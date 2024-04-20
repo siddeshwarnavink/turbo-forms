@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
-import lombok.Setter;
 import sidd33.turboengine.forms.annotation.FormField;
 import sidd33.turboengine.forms.annotation.FormFieldGeneratorProcessor;
 import sidd33.turboengine.forms.annotation.WithFormProcessor;
@@ -17,7 +16,6 @@ import sidd33.turboengine.forms.data.RenderingStateHolder;
 import sidd33.turboengine.forms.type.FieldGenerator;
 
 public class FormControl extends SimpleTagSupport {
-    @Setter
     private String name;
 
     @Override
@@ -89,4 +87,12 @@ public class FormControl extends SimpleTagSupport {
         }
         return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

@@ -12,10 +12,10 @@ public class TestForm implements FormData {
     @NotEmpty(message = "Name is required")
     private String name;
 
-	@FormField(label = "Date Time", fieldType = FormFieldType.DATETIME)
+    @FormField(label = "Date Time", fieldType = FormFieldType.DATETIME)
     @NotNull(message = "Date Time is required")
     @Min(value = 1, message = "Date Time is required")
-    private Long dateTime;
+    private Long dateTime = System.currentTimeMillis() / 1000L;
 
     public String getName() {
         return name;
