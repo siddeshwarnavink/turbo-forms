@@ -12,8 +12,8 @@
     <body class="container">
         <h3>Hello JPS!</h3>
         <form:form hx-boost="true" modelAttribute="formData" method="POST">
-            <turboforms:control name="name"/>
-            <turboforms:control name="dateTime" time="false" />
+            <turboforms:control name="name" hint="Please use real name" />
+            <turboforms:control name="dateTime" minDate="today" />
 
             <button class="btn btn-primary" type="submit">Submit</button>
         </form:form>
