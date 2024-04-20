@@ -4,8 +4,6 @@ import sidd33.turboengine.forms.annotation.FormField;
 import sidd33.turboengine.forms.type.FieldGenerator;
 
 public class DatePicker implements FieldGenerator {
-    private static boolean scriptInitilized = false;
-
     @Override
     public String renderContent(FormField formField, String errorMessage) {
         StringBuilder builder = new StringBuilder();
@@ -23,10 +21,10 @@ public class DatePicker implements FieldGenerator {
     }
 
     @Override
-    public String renderScripts(FormField formField) {
+    public String renderScripts(FormField formField, boolean initilized) {
         StringBuilder builder = new StringBuilder();
 
-        if (!scriptInitilized) {
+        if (!initilized) {
             builder.append("<script src=\"https://cdn.jsdelivr.net/npm/flatpickr\"></script>");
             builder.append("""
                     <script>
@@ -41,7 +39,6 @@ public class DatePicker implements FieldGenerator {
                         };
                     </script>""");
         }
-        scriptInitilized = true;
 
         builder.append("<script>flatpickr('#" + formField.name() + "', flatpickrConifg);</script>");
 

@@ -1,10 +1,8 @@
 package sidd33.turboengine.forms.taglibs;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
@@ -18,18 +16,15 @@ import sidd33.turboengine.forms.data.RenderingStateHolder;
 import sidd33.turboengine.forms.type.FieldGenerator;
 
 public class FormControl extends SimpleTagSupport {
-    private static Set<String> rendered = new HashSet<>();
-
     @Setter
     private String name;
 
     @Override
     public void doTag() throws JspException, IOException {
-
         PageContext pageContext = (PageContext) getJspContext();
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         RenderingStateHolder stateHolder = (RenderingStateHolder) request.getAttribute("formState");
-        if(stateHolder == null) {
+        if (stateHolder == null) {
             throw new JspException("RenderingState not found in request");
         }
 
@@ -51,13 +46,15 @@ public class FormControl extends SimpleTagSupport {
                 String errorMessage = errors.containsKey(field.name()) ? errors.get(field.name()) : null;
                 getJspContext().getOut().write(generator.renderContent(field, errorMessage));
 
-                if (!rendered.contains(field.name())) {
-                    String renderedScript = generator.renderScripts(field);
+                if (!stateHolder.getRenderedFields().contains(field.name())) {
+                    boolean initilized = stateHolder.getRenderedScripts().contains(field.fieldType());
+                    String renderedScript = generator.renderScripts(field, initilized);
                     if (renderedScript != null) {
                         stateHolder.getScript().getBuilder().append(renderedScript);
+                        stateHolder.getRenderedScripts().add(field.fieldType());
                     }
 
-                    rendered.add(field.name());
+                    stateHolder.getRenderedFields().add(field.name());
                 }
             } else {
                 throw new JspException("FormField not found in FormData");

@@ -20,7 +20,7 @@ public class TextField implements FieldGenerator {
 	}
 
 	@Override
-	public String renderScripts(FormField formField) {
+	public String renderScripts(FormField formField, boolean initilized) {
         return null;
 	}
 

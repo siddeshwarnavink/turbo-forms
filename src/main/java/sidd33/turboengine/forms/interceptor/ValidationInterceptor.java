@@ -17,6 +17,5 @@ public class ValidationInterceptor implements HandlerInterceptor {
         if (modelAndView != null && modelAndView.getModel() != null && stateHolder != null) {
             stateHolder.setModel(modelAndView.getModel());
         }
-
     }
 }

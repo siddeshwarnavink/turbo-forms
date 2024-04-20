@@ -4,9 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,7 +12,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sidd33.turboengine.forms.data.RenderingStateHolder;
-import sidd33.turboengine.forms.taglibs.Style;
 import sidd33.turboengine.forms.type.FieldGenerator;
 import sidd33.turboengine.forms.type.FormData;
 import sidd33.turboengine.forms.type.FormFieldType;
@@ -22,7 +19,6 @@ import sidd33.turboengine.forms.type.FormFieldType;
 public class WithFormProcessor implements HandlerInterceptor {
     public static Class<? extends FormData> formDataClass;
     public static List<FormField> formFields = new ArrayList<>();
-    private static Set<FormFieldType> styleInitilized = new HashSet<>();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -82,7 +78,7 @@ public class WithFormProcessor implements HandlerInterceptor {
                     }
 
                     if (FormFieldGeneratorProcessor.generators.containsKey(formFieldAnnotation.fieldType())
-                            && !styleInitilized.contains(formFieldAnnotation.fieldType())) {
+                            && !stateHolder.getStyleInitilized().contains(formFieldAnnotation.fieldType())) {
                         FieldGenerator generator = FormFieldGeneratorProcessor.generators
                                 .get(formFieldAnnotation.fieldType());
 
@@ -91,7 +87,7 @@ public class WithFormProcessor implements HandlerInterceptor {
                             stateHolder.getStyle().getBuilder().append(styleRender);
                         }
 
-                        styleInitilized.add(formFieldAnnotation.fieldType());
+                        stateHolder.getStyleInitilized().add(formFieldAnnotation.fieldType());
                     }
 
                     formFields.add(formFieldAnnotation);
