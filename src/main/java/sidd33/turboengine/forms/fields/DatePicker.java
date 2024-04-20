@@ -7,12 +7,17 @@ public class DatePicker implements FieldGenerator {
     private static boolean scriptInitilized = false;
 
     @Override
-    public String renderContent(FormField formField) {
+    public String renderContent(FormField formField, String errorMessage) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("<label>" + formField.label() + "</label>");
-        builder.append("<input id=\"" + formField.name() + "\">");
+        builder.append("<div class=\"mb-2\">");
+        builder.append("<label class=\"form-label\">" + formField.label() + "</label>");
+        builder.append("<input class=\"form-control\" id=\"" + formField.name() + "\">");
         builder.append("<input type=\"hidden\" name=\"" + formField.name() + "\">");
+        if (errorMessage != null) {
+            builder.append("<div class=\"invalid-feedback d-block\">" + errorMessage + "</div>");
+        }
+        builder.append("</div>");
 
         return builder.toString();
     }
@@ -47,7 +52,8 @@ public class DatePicker implements FieldGenerator {
     public String renderStyles(FormField formField) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css\">");
+        builder.append(
+                "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css\">");
 
         return builder.toString();
     }

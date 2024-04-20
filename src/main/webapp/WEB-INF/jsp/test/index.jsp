@@ -3,14 +3,20 @@
 <html>
     <head>
         <title>TurboForm test</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <turboforms:style />
     </head>
-    <body>
-        <h1>Hello JPS!</h1>
-        <turboforms:control name="name" />
-        <turboforms:control name="dateTime" />
-        <turboforms:control name="dateTime2" />
+    <body class="container">
+        <h3>Hello JPS!</h3>
+        <form method="POST">
+            <turboforms:control name="name" />
+            <turboforms:control name="dateTime" />
+            <turboforms:control name="dateTime2" />
 
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <turboforms:script />
     </body>
 </html>

@@ -46,7 +46,35 @@ public class WithFormProcessor implements HandlerInterceptor {
             Annotation[] annotations = field.getDeclaredAnnotations();
             for (Annotation annotation : annotations) {
                 if (annotation.annotationType() == FormField.class) {
-                    FormField formFieldAnnotation = (FormField) annotation;
+                    FormField formFieldAnnotation = (FormField) annotation; 
+
+                    if (formFieldAnnotation.name().length() < 1) {
+                        Class<? extends Annotation> annotationType = formFieldAnnotation.annotationType();
+                        String annotationLabel = formFieldAnnotation.label();
+                        FormFieldType annotationFormFieldType = formFieldAnnotation.fieldType();
+
+                        formFieldAnnotation = new FormField() {
+                            @Override
+                            public Class<? extends Annotation> annotationType() {
+                                return annotationType;
+                            }
+
+                            @Override
+                            public String name() {
+                                return field.getName();
+                            }
+
+                            @Override
+                            public String label() {
+                                return annotationLabel;
+                            }
+
+                            @Override
+                            public FormFieldType fieldType() {
+                                return annotationFormFieldType;
+                            }
+                        };
+                    }
 
                     if (FormFieldGeneratorProcessor.generators.containsKey(formFieldAnnotation.fieldType())
                             && !styleInitilized.contains(formFieldAnnotation.fieldType())) {

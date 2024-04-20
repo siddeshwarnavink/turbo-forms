@@ -10,7 +10,7 @@ import sidd33.turboengine.forms.type.FormFieldType;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface FormField {
-    String name();
+    String name() default "";
     String label();
     FormFieldType fieldType();
 }
