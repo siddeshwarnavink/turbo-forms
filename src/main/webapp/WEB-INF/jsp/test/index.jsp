@@ -6,19 +6,18 @@
         <title>TurboForm test</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <turboforms:style />
-
-        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     </head>
     <body class="container">
         <h3>Hello JPS!</h3>
-        <form:form hx-boost="true" modelAttribute="formData" method="POST">
+        <form:form modelAttribute="formData" method="POST">
             <turboforms:control name="name" hint="Please use real name" />
-            <turboforms:control name="dateTime" minDate="today" />
+            <turboforms:control name="dob" minDate="today" />
+            <turboforms:control name="bio" />
 
             <button class="btn btn-primary" type="submit">Submit</button>
         </form:form>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <turboforms:script />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

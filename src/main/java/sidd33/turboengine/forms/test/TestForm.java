@@ -12,12 +12,24 @@ public class TestForm implements FormData {
     @NotEmpty(message = "Name is required")
     private String name;
 
-    @FormField(label = "Date Time", fieldType = FormFieldType.DATETIME)
-    @NotNull(message = "Date Time is required")
-    @Min(value = 1, message = "Date Time is required")
-    private Long dateTime;
+    @FormField(label = "Date of birth", fieldType = FormFieldType.DATETIME)
+    @NotNull(message = "DOB is required")
+    @Min(value = 1, message = "DOB is required")
+    private Long dob;
 
-    public String getName() {
+    @FormField(label = "You're Bio", fieldType = FormFieldType.RICHTEXT)
+    @NotEmpty(message = "Bio is required")
+    private String bio;
+
+    public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+
+	public String getName() {
         return name;
     }
 
@@ -25,13 +37,22 @@ public class TestForm implements FormData {
         this.name = name;
     }
 
-    public long getDateTime() {
-        return dateTime;
+    public long getDob() {
+        return dob;
     }
 
-    public void setDateTime(String dateTimeString) {
+    public void setDob(String dateTimeString) {
         if (dateTimeString != null && !dateTimeString.isEmpty()) {
-            this.dateTime = Long.parseLong(dateTimeString);
+            this.dob = Long.parseLong(dateTimeString);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "TestForm{" +
+                "name='" + name + '\'' +
+                ", dob=" + dob +
+                ", bio='" + bio + '\'' +
+                '}';
     }
 }

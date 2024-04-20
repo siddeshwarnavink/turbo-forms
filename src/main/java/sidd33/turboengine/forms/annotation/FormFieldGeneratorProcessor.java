@@ -7,6 +7,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import sidd33.turboengine.forms.fields.DatePicker;
+import sidd33.turboengine.forms.fields.RichText;
 import sidd33.turboengine.forms.fields.TextField;
 import sidd33.turboengine.forms.type.FieldGenerator;
 import sidd33.turboengine.forms.type.FormFieldType;
@@ -20,6 +21,7 @@ public class FormFieldGeneratorProcessor implements BeanPostProcessor {
 
         generators.put(FormFieldType.TEXTINPUT, new TextField());
         generators.put(FormFieldType.DATETIME, new DatePicker());
+        generators.put(FormFieldType.RICHTEXT, new RichText());
     }
 
     @Override

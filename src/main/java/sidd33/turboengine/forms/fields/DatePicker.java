@@ -48,18 +48,18 @@ public class DatePicker implements FieldGenerator {
         }
 
         builder.append("<script>\n")
-            .append("    const flatpickrConifg__" + formField.name() + " = {\n")
-            .append(!disableTime ?  "        enableTime: true,\n" : "")
-            .append("        dateFormat: \"d-m-Y H:i\",\n")
-            .append(config.containsKey("minDate") ?  "        minDate: \"" + config.get("minDate") + "\",\n" : "")
-            .append(config.containsKey("maxDate") ?  "        maxDate: \"" + config.get("minDate") + "\",\n" : "")
-            .append(config.containsKey("dateRange") ?  "        mode: \"range\",\n" : "")
-            .append("        onClose: function (selectedDates, dateStr, instance) {\n")
-            .append("            const timestamp = Math.floor(instance.latestSelectedDateObj.getTime() / 1000);\n")
-            .append("            instance.input.value = timestamp;\n")
-            .append("            document.querySelector(`input[name=${instance.input.id}]`).value = timestamp;\n")
-            .append("        }\n")
-            .append("    };\n");
+            .append("const flatpickrConifg__" + formField.name() + " = {")
+            .append(!disableTime ?  "enableTime: true,\n" : "")
+            .append("dateFormat: \"d-m-Y H:i\",")
+            .append(config.containsKey("minDate") ?  "minDate: \"" + config.get("minDate") + "\"," : "")
+            .append(config.containsKey("maxDate") ?  "maxDate: \"" + config.get("minDate") + "\"," : "")
+            .append(config.containsKey("dateRange") ?  "mode: \"range\"," : "")
+            .append("onClose: function (selectedDates, dateStr, instance) {")
+            .append("const timestamp = Math.floor(instance.latestSelectedDateObj.getTime() / 1000);")
+            .append("instance.input.value = timestamp;")
+            .append("document.querySelector(`input[name=${instance.input.id}]`).value = timestamp;")
+            .append("}")
+            .append("};");
         builder.append("flatpickr('#" + formField.name() + "', flatpickrConifg__" + formField.name() + ");</script>");
 
         return builder.toString();
