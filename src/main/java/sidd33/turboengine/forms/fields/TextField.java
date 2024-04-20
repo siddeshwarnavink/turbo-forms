@@ -3,7 +3,7 @@ package sidd33.turboengine.forms.fields;
 import sidd33.turboengine.forms.annotation.FormField;
 import sidd33.turboengine.forms.type.FieldGenerator;
 
-public class TextField implements FieldGenerator { 
+public class TextField implements FieldGenerator {  
 	@Override
 	public String renderContent(FormField formField, String errorMessage) {
         StringBuilder builder = new StringBuilder();

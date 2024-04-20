@@ -15,7 +15,8 @@ import sidd33.turboengine.forms.annotation.WithForm;
 public class TestController {
     @GetMapping("/")
     @WithForm(TestForm.class)
-    public String getTestRoot() {
+    public String getTestRoot(Model model) {
+        model.addAttribute("formData", new TestForm());
         return "test/index";
     }
 
@@ -23,6 +24,7 @@ public class TestController {
     @WithForm(TestForm.class)
     public String postTestRoot(@Valid TestForm formData, BindingResult result, Model model) {
         model.addAttribute("formData", formData);
+        System.out.println("formdata=" + formData);
 
         if (result.hasErrors()) {
             return "test/index";

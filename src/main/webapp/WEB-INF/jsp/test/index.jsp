@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="turboforms" uri="/WEB-INF/forms.tld" %>
 
 <html>
@@ -8,13 +9,13 @@
     </head>
     <body class="container">
         <h3>Hello JPS!</h3>
-        <form method="POST">
+        <form:form modelAttribute="formData" method="POST">
             <turboforms:control name="name" />
             <turboforms:control name="dateTime" />
             <turboforms:control name="dateTime2" />
 
             <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
+        </form:form>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <turboforms:script />
