@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sidd33.turboengine.forms.data.RenderingStateHolder;
+import sidd33.turboengine.forms.type.FormData;
 
 public class ValidationInterceptor implements HandlerInterceptor {
     @Override
@@ -16,6 +17,16 @@ public class ValidationInterceptor implements HandlerInterceptor {
         RenderingStateHolder stateHolder = (RenderingStateHolder) request.getAttribute("formState");
         if (modelAndView != null && modelAndView.getModel() != null && stateHolder != null) {
             stateHolder.setModel(modelAndView.getModel());
+
+            Class<? extends FormData> formDataClass = stateHolder.getFormDataClass();
+            if (formDataClass != null) {
+                for (Object modelValue : modelAndView.getModel().values()) {
+                    if (formDataClass.isInstance(modelValue)) {
+                        stateHolder.setFormData(modelValue);
+                    }
+                    break;
+                }
+            }
         }
     }
 }

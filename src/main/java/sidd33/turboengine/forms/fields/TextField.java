@@ -5,12 +5,17 @@ import sidd33.turboengine.forms.type.FieldGenerator;
 
 public class TextField implements FieldGenerator {  
 	@Override
-	public String renderContent(FormField formField, String errorMessage) {
+	public String renderContent(FormField formField, Object value, String errorMessage) {
+        String strValue = "";
+        if(value instanceof String) {
+            strValue = (String) value;
+        }
+
         StringBuilder builder = new StringBuilder();
 
         builder.append("<div class=\"mb-2\">");
         builder.append("<label class=\"form-label\">" + formField.label() + "</label>");
-        builder.append("<input class=\"form-control\" name=\"" + formField.name() + "\">");
+        builder.append("<input class=\"form-control\" name=\"" + formField.name() + "\" value=\"" + strValue + "\">");
         if(errorMessage != null) {
             builder.append("<div class=\"invalid-feedback d-block\">" + errorMessage + "</div>");
         }

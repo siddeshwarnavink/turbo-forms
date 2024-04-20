@@ -1,6 +1,7 @@
 package sidd33.turboengine.forms.taglibs;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public class FormControl extends SimpleTagSupport {
 
         Map<String, String> errors = stateHolder.getErrors();
 
-        if (WithFormProcessor.formDataClass != null) {
+        if (stateHolder.getFormDataClass() != null) {
             Optional<FormField> optField = WithFormProcessor.formFields.stream()
                     .filter(f -> f.name().equals(name))
                     .findFirst();
@@ -43,8 +44,15 @@ public class FormControl extends SimpleTagSupport {
                     throw new JspException("Field Generator not configured for type " + field.fieldType());
                 }
 
+                Object value = null;
+                try {
+                    value = getFieldValue(field, stateHolder);
+                } catch (Exception e) {
+                    // do nothing :)
+                }
                 String errorMessage = errors.containsKey(field.name()) ? errors.get(field.name()) : null;
-                getJspContext().getOut().write(generator.renderContent(field, errorMessage));
+
+                getJspContext().getOut().write(generator.renderContent(field, value, errorMessage));
 
                 if (!stateHolder.getRenderedFields().contains(field.name())) {
                     boolean initilized = stateHolder.getRenderedScripts().contains(field.fieldType());
@@ -62,5 +70,23 @@ public class FormControl extends SimpleTagSupport {
         } else {
             throw new JspException("No FormData class specified");
         }
+    }
+
+    private Object getFieldValue(FormField field, RenderingStateHolder stateHolder) throws Exception {
+        Object value = null;
+
+        if (stateHolder.getFormData() != null) {
+            Method getter = stateHolder.getFormDataClass().getMethod("get" + capitalize(field.name()));
+            value = getter.invoke(stateHolder.getFormData());
+        }
+
+        return value;
+    }
+
+    private static String capitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
 }

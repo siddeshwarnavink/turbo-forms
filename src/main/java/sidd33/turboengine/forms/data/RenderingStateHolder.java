@@ -13,46 +13,19 @@ import org.springframework.validation.ObjectError;
 
 import sidd33.turboengine.forms.taglibs.Script;
 import sidd33.turboengine.forms.taglibs.Style;
+import sidd33.turboengine.forms.type.FormData;
 import sidd33.turboengine.forms.type.FormFieldType;
 
 @Component
 public class RenderingStateHolder implements Serializable {
+    private Class<? extends FormData> formDataClass;
+    private Object formData;
     private Script script = new Script();
     private Style style = new Style();
     private Map<String, Object> model;
     private Map<String, String> errors = new HashMap<>();
     private Set<String> renderedFields = new HashSet<>();
     private Set<FormFieldType> styleInitilized = new HashSet<>();
-
-    public Set<FormFieldType> getStyleInitilized() {
-		return styleInitilized;
-	}
-
-	public Set<String> getRenderedFields() {
-		return renderedFields;
-	}
-
-	private Set<FormFieldType> renderedScripts = new HashSet<>();
-
-    public Set<FormFieldType> getRenderedScripts() {
-        return renderedScripts;
-    }
-
-    public Style getStyle() {
-        return style;
-    }
-
-    public Script getScript() {
-        return script;
-    }
-
-    public Map<String, Object> getModel() {
-        return model;
-    }
-
-    public Map<String, String> getErrors() {
-        return errors;
-    }
 
     public void setModel(Map<String, Object> model) {
         this.model = model;
@@ -73,5 +46,51 @@ public class RenderingStateHolder implements Serializable {
                 break;
             }
         }
+    }
+
+    public Object getFormData() {
+        return formData;
+    }
+
+    public void setFormData(Object formData) {
+        this.formData = formData;
+    }
+
+    public Class<? extends FormData> getFormDataClass() {
+        return formDataClass;
+    }
+
+    public void setFormDataClass(Class<? extends FormData> formDataClass) {
+        this.formDataClass = formDataClass;
+    }
+
+    public Set<FormFieldType> getStyleInitilized() {
+        return styleInitilized;
+    }
+
+    public Set<String> getRenderedFields() {
+        return renderedFields;
+    }
+
+    private Set<FormFieldType> renderedScripts = new HashSet<>();
+
+    public Set<FormFieldType> getRenderedScripts() {
+        return renderedScripts;
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public Script getScript() {
+        return script;
+    }
+
+    public Map<String, Object> getModel() {
+        return model;
+    }
+
+    public Map<String, String> getErrors() {
+        return errors;
     }
 }

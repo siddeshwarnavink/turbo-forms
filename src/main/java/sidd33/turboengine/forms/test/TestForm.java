@@ -1,6 +1,8 @@
 package sidd33.turboengine.forms.test;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import sidd33.turboengine.forms.annotation.FormField;
 import sidd33.turboengine.forms.type.FormData;
 import sidd33.turboengine.forms.type.FormFieldType;
@@ -11,12 +13,9 @@ public class TestForm implements FormData {
     private String name;
 
 	@FormField(label = "Date Time", fieldType = FormFieldType.DATETIME)
-    @NotEmpty(message = "Date Time is required")
-    private String dateTime;
-
-    @FormField(label = "Another Date Time", fieldType = FormFieldType.DATETIME)
-    @NotEmpty(message = "Date Time 2 is required")
-    private String dateTime2;
+    @NotNull(message = "Date Time is required")
+    @Min(value = 1, message = "Date Time is required")
+    private Long dateTime;
 
     public String getName() {
         return name;
@@ -26,28 +25,11 @@ public class TestForm implements FormData {
         this.name = name;
     }
 
-    public String getDateTime() {
+    public long getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public String getDateTime2() {
-        return dateTime2;
-    }
-
-    public void setDateTime2(String dateTime2) {
-        this.dateTime2 = dateTime2;
-    }
-
-    @Override
-    public String toString() {
-        return "TestForm{" +
-                "name='" + name + '\'' +
-                ", dateTime='" + dateTime + '\'' +
-                ", dateTime2='" + dateTime2 + '\'' +
-                '}';
     }
 }

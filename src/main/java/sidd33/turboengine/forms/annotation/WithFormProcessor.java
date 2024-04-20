@@ -17,7 +17,6 @@ import sidd33.turboengine.forms.type.FormData;
 import sidd33.turboengine.forms.type.FormFieldType;
 
 public class WithFormProcessor implements HandlerInterceptor {
-    public static Class<? extends FormData> formDataClass;
     public static List<FormField> formFields = new ArrayList<>();
 
     @Override
@@ -33,7 +32,7 @@ public class WithFormProcessor implements HandlerInterceptor {
 
             if (method.isAnnotationPresent(WithForm.class)) {
                 WithForm customAnnotation = method.getAnnotation(WithForm.class);
-                formDataClass = customAnnotation.value();
+                stateHolder.setFormDataClass(customAnnotation.value());
                 extractFormFields(stateHolder);
             }
         }
@@ -41,7 +40,7 @@ public class WithFormProcessor implements HandlerInterceptor {
     }
 
     private void extractFormFields(RenderingStateHolder stateHolder) {
-        Field[] fields = formDataClass.getDeclaredFields();
+        Field[] fields = stateHolder.getFormDataClass().getDeclaredFields();
 
         for (Field field : fields) {
             Annotation[] annotations = field.getDeclaredAnnotations();
