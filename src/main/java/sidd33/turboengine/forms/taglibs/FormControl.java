@@ -2,12 +2,14 @@ package sidd33.turboengine.forms.taglibs;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.DynamicAttributes;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 import sidd33.turboengine.forms.annotation.FormField;
 import sidd33.turboengine.forms.annotation.FormFieldGeneratorProcessor;
@@ -15,8 +17,13 @@ import sidd33.turboengine.forms.annotation.WithFormProcessor;
 import sidd33.turboengine.forms.data.RenderingStateHolder;
 import sidd33.turboengine.forms.type.FieldGenerator;
 
-public class FormControl extends SimpleTagSupport {
-    private String name;
+public class FormControl extends SimpleTagSupport implements DynamicAttributes {
+    private Map<String, Object> config = new HashMap<>();
+
+    @Override
+    public void setDynamicAttribute(String uri, String localName, Object value) throws JspException {
+        config.put(localName, value);
+    }
 
     @Override
     public void doTag() throws JspException, IOException {
@@ -31,7 +38,7 @@ public class FormControl extends SimpleTagSupport {
 
         if (stateHolder.getFormDataClass() != null) {
             Optional<FormField> optField = WithFormProcessor.formFields.stream()
-                    .filter(f -> f.name().equals(name))
+                    .filter(f -> f.name().equals(config.get("name")))
                     .findFirst();
 
             if (optField.isPresent()) {
@@ -49,12 +56,11 @@ public class FormControl extends SimpleTagSupport {
                     // do nothing :)
                 }
                 String errorMessage = errors.containsKey(field.name()) ? errors.get(field.name()) : null;
-
-                getJspContext().getOut().write(generator.renderContent(field, value, errorMessage));
+                getJspContext().getOut().write(generator.renderContent(field, value, config, errorMessage));
 
                 if (!stateHolder.getRenderedFields().contains(field.name())) {
                     boolean initilized = stateHolder.getRenderedScripts().contains(field.fieldType());
-                    String renderedScript = generator.renderScripts(field, initilized);
+                    String renderedScript = generator.renderScripts(field, config, initilized);
                     if (renderedScript != null) {
                         stateHolder.getScript().getBuilder().append(renderedScript);
                         stateHolder.getRenderedScripts().add(field.fieldType());
@@ -87,12 +93,4 @@ public class FormControl extends SimpleTagSupport {
         }
         return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

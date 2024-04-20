@@ -15,7 +15,7 @@ public class TestForm implements FormData {
     @FormField(label = "Date Time", fieldType = FormFieldType.DATETIME)
     @NotNull(message = "Date Time is required")
     @Min(value = 1, message = "Date Time is required")
-    private Long dateTime = System.currentTimeMillis() / 1000L;
+    private Long dateTime;
 
     public String getName() {
         return name;
@@ -29,7 +29,9 @@ public class TestForm implements FormData {
         return dateTime;
     }
 
-    public void setDateTime(long dateTime) {
-        this.dateTime = dateTime;
+    public void setDateTime(String dateTimeString) {
+        if (dateTimeString != null && !dateTimeString.isEmpty()) {
+            this.dateTime = Long.parseLong(dateTimeString);
+        }
     }
 }
