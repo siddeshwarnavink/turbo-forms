@@ -29,21 +29,4 @@ public class ValidationInterceptor implements HandlerInterceptor {
             }
         }
     }
-
-    /*
-    private void checkFileUpload(RenderingStateHolder stateHolder, HttpServletRequest request) throws Exception {
-        if ("POST".equalsIgnoreCase(request.getMethod())) {
-            Collection<Part> parts = request.getParts();
-
-            for (Part part : parts) {
-                if (part.getContentType() != null && part.getSize() == 0) {
-                    String methodName = "set" + StringUtil.capitalizeFirstLetter(part.getName());
-                    Method setter = stateHolder.getFormDataClass().getMethod(methodName, MultipartFile.class);
-                    setter.invoke(stateHolder.getFormData(), (MultipartFile) null);
-
-                    System.out.println("formThen=" + stateHolder.getFormData());
-                }
-            }
-        }
-    }*/
 }
