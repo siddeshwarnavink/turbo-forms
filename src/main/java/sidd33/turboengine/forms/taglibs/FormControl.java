@@ -6,14 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
 import jakarta.servlet.jsp.tagext.DynamicAttributes;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 import sidd33.turboengine.forms.annotation.FormField;
 import sidd33.turboengine.forms.annotation.FormFieldGeneratorProcessor;
 import sidd33.turboengine.forms.annotation.WithFormProcessor;
+import sidd33.turboengine.forms.data.RenderArgs;
+import sidd33.turboengine.forms.data.RenderArgsBuilder;
 import sidd33.turboengine.forms.data.RenderingStateHolder;
 import sidd33.turboengine.forms.type.FieldGenerator;
 
@@ -56,11 +60,23 @@ public class FormControl extends SimpleTagSupport implements DynamicAttributes {
                     // do nothing :)
                 }
                 String errorMessage = errors.containsKey(field.name()) ? errors.get(field.name()) : null;
-                getJspContext().getOut().write(generator.renderContent(field, value, config, errorMessage));
+                boolean initialized = stateHolder.getRenderedScripts().contains(field.fieldType());
+                ServletContext servletContext = pageContext.getServletContext();
+
+                RenderArgs args = new RenderArgsBuilder()
+                        .formField(field)
+                        .value(value)
+                        .config(config)
+                        .errorMessage(errorMessage)
+                        .jspContext(getJspContext())
+                        .initialized(initialized)
+                        .servletContext(servletContext)
+                        .build();
+
+                getJspContext().getOut().write(generator.renderContent(args));
 
                 if (!stateHolder.getRenderedFields().contains(field.name())) {
-                    boolean initilized = stateHolder.getRenderedScripts().contains(field.fieldType());
-                    String renderedScript = generator.renderScripts(field, config, initilized);
+                    String renderedScript = generator.renderScripts(args);
                     if (renderedScript != null) {
                         stateHolder.getScript().getBuilder().append(renderedScript);
                         stateHolder.getRenderedScripts().add(field.fieldType());

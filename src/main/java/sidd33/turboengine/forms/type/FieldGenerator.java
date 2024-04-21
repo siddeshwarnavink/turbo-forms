@@ -1,11 +1,12 @@
 package sidd33.turboengine.forms.type;
 
-import java.util.Map;
-
 import sidd33.turboengine.forms.annotation.FormField;
+import sidd33.turboengine.forms.data.RenderArgs;
 
 public interface FieldGenerator {
-   public String renderContent(FormField formField, Object value, Map<String, Object> config, String errorMessage);
-   public String renderScripts(FormField formField, Map<String, Object> config, boolean initilized);
-   public String renderStyles(FormField formField);
+    public String renderContent(RenderArgs args);
+
+    public String renderScripts(RenderArgs args);
+
+    public String renderStyles(FormField formField);
 }
