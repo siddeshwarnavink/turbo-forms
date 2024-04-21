@@ -9,9 +9,10 @@
     </head>
     <body class="container">
         <h3>Hello JPS!</h3>
-        <form:form modelAttribute="formData" method="POST">
+        <form:form modelAttribute="formData" method="POST" enctype="multipart/form-data">
             <turboforms:control name="name" hint="Please use real name" />
             <turboforms:control name="dob" minDate="today" />
+            <turboforms:control name="file" accept="image/png, image/jpg"  hint="Please use real face" />
             <turboforms:control name="bio" />
 
             <button class="btn btn-primary" type="submit">Submit</button>

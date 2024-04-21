@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jakarta.validation.Valid;
 import sidd33.turboengine.forms.annotation.WithForm;
 
@@ -28,6 +25,8 @@ public class TestController {
     @PostMapping(value = "/")
     @WithForm(TestForm.class)
     public ModelAndView postTestRoot(@Valid TestForm formData, BindingResult result) {
+        System.out.println(formData);
+
         ModelAndView modelAndView = new ModelAndView();
 
         if (result.hasErrors()) {

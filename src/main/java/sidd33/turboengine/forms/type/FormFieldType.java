@@ -4,5 +4,6 @@ public enum FormFieldType {
     TEXTINPUT,
     DATETIME,
     RICHTEXT,
-    ERROR_ONLY
+    ERROR_ONLY,
+    FILEINPUT
 }

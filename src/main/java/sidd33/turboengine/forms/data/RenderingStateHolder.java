@@ -93,4 +93,19 @@ public class RenderingStateHolder implements Serializable {
     public Map<String, String> getErrors() {
         return errors;
     }
+
+    @Override
+    public String toString() {
+        return "RenderingStateHolder{" +
+                "formDataClass=" + formDataClass +
+                ", formData=" + formData +
+                ", script=" + script +
+                ", style=" + style +
+                ", model=" + model +
+                ", errors=" + errors +
+                ", renderedFields=" + renderedFields +
+                ", styleInitilized=" + styleInitilized +
+                ", renderedScripts=" + renderedScripts +
+                '}';
+    }
 }

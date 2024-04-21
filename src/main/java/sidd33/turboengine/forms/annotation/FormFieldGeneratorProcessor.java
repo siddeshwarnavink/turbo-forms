@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import sidd33.turboengine.forms.fields.DatePicker;
 import sidd33.turboengine.forms.fields.ErrorOnly;
+import sidd33.turboengine.forms.fields.FileUpload;
 import sidd33.turboengine.forms.fields.RichText;
 import sidd33.turboengine.forms.fields.TextField;
 import sidd33.turboengine.forms.type.FieldGenerator;
@@ -24,12 +25,13 @@ public class FormFieldGeneratorProcessor implements BeanPostProcessor {
         generators.put(FormFieldType.DATETIME, new DatePicker());
         generators.put(FormFieldType.RICHTEXT, new RichText());
         generators.put(FormFieldType.ERROR_ONLY, new ErrorOnly());
+        generators.put(FormFieldType.FILEINPUT, new FileUpload());
     }
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         Class<?> clazz = bean.getClass();
-        
+
         if (clazz.isAnnotationPresent(FormFieldGenerator.class)) {
             FormFieldGenerator annotation = clazz.getAnnotation(FormFieldGenerator.class);
             generators.put(annotation.type(), (FieldGenerator) bean);

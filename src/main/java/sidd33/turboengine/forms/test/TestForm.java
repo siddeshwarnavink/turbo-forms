@@ -1,5 +1,7 @@
 package sidd33.turboengine.forms.test;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,15 +23,27 @@ public class TestForm implements FormData {
     @NotEmpty(message = "Bio is required")
     private String bio;
 
+    @FormField(label = "Image file", fieldType = FormFieldType.FILEINPUT)
+    @NotNull(message = "File is required")
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     public String getBio() {
-		return bio;
-	}
+        return bio;
+    }
 
-	public void setBio(String bio) {
-		this.bio = bio;
-	}
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
-	public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -52,6 +66,7 @@ public class TestForm implements FormData {
         return "TestForm{" +
                 "name='" + name + '\'' +
                 ", dob=" + dob +
+                ", file=" + file +
                 ", bio='" + bio + '\'' +
                 '}';
     }
