@@ -8,7 +8,7 @@ import sidd33.turboengine.forms.type.FormData;
 import sidd33.turboengine.forms.type.FormFieldType;
 
 public class TestForm implements FormData {
-    @FormField(label = "Name", fieldType = FormFieldType.ERROR_ONLY)
+    @FormField(label = "Name", fieldType = FormFieldType.TEXTINPUT)
     @NotEmpty(message = "Name is required")
     private String name;
 

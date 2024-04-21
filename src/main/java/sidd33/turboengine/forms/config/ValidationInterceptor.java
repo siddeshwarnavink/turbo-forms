@@ -1,4 +1,4 @@
-package sidd33.turboengine.forms.interceptor;
+package sidd33.turboengine.forms.config;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +13,6 @@ public class ValidationInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             ModelAndView modelAndView)
             throws Exception {
-
         RenderingStateHolder stateHolder = (RenderingStateHolder) request.getAttribute("formState");
         if (modelAndView != null && modelAndView.getModel() != null && stateHolder != null) {
             stateHolder.setModel(modelAndView.getModel());

@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="turboforms" uri="/WEB-INF/forms.tld" %>
+<%@ taglib prefix="turboforms" uri="forms.tld" %>
 
 <html>
     <head>
