@@ -5,9 +5,10 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class MinFileSizeValidator implements ConstraintValidator<MinFileSize, MultipartFile> {
+public class MinFileSizeValidator implements ConstraintValidator<MinFileSize, Object> {
     private long min;
-    private String message;
+    @SuppressWarnings("unused")
+	private String message;
 
     @Override
     public void initialize(MinFileSize constraintAnnotation) {
@@ -16,12 +17,24 @@ public class MinFileSizeValidator implements ConstraintValidator<MinFileSize, Mu
     }
 
     @Override
-    public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
-        if (file == null || file.isEmpty()) {
-            return false; 
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+        if (value == null) {
+            return false;
         }
 
-        return file.getSize() >= min;
+        if (value instanceof MultipartFile) {
+            MultipartFile file = (MultipartFile) value;
+            return file.getSize() >= min;
+        } else if (value instanceof MultipartFile[]) {
+            MultipartFile[] files = (MultipartFile[]) value;
+            for (MultipartFile file : files) {
+                if (file.isEmpty() || file.getSize() < min) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            throw new IllegalArgumentException("Unsupported type for @MinFileSize: " + value.getClass());
+        }
     }
-
 }
