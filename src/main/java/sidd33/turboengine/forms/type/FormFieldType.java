@@ -1,9 +1,9 @@
 package sidd33.turboengine.forms.type;
 
 public enum FormFieldType {
-    TEXTINPUT,
-    DATETIME,
+    TEXT,
+    DATE,
     RICHTEXT,
     ERROR_ONLY,
-    FILEINPUT
+    FILE
 }

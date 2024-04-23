@@ -21,11 +21,11 @@ public class FormFieldGeneratorProcessor implements BeanPostProcessor {
     public FormFieldGeneratorProcessor() {
         generators = new HashMap<>();
 
-        generators.put(FormFieldType.TEXTINPUT, new TextField());
-        generators.put(FormFieldType.DATETIME, new DatePicker());
+        generators.put(FormFieldType.TEXT, new TextField());
+        generators.put(FormFieldType.DATE, new DatePicker());
         generators.put(FormFieldType.RICHTEXT, new RichText());
         generators.put(FormFieldType.ERROR_ONLY, new ErrorOnly());
-        generators.put(FormFieldType.FILEINPUT, new FileUpload());
+        generators.put(FormFieldType.FILE, new FileUpload());
     }
 
     @Override
