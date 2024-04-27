@@ -28,6 +28,10 @@ dependencies {
     implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
 }
 
+tasks.named('jar') {
+	archiveClassifier = ''
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
