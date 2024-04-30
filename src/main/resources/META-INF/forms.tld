@@ -2,24 +2,35 @@
 <taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
-        <tlib-version>1.0</tlib-version>
-        <short-name>turboforms</short-name>
-        <uri>sidd33/turboengine/forms</uri>
-        <tag>
-            <name>control</name>
-            <tag-class>sidd33.turboengine.forms.taglibs.FormControl</tag-class>
-            <dynamic-attributes>true</dynamic-attributes>
-            <body-content>empty</body-content>
-        </tag>
-        <tag>
-            <name>script</name>
-            <tag-class>sidd33.turboengine.forms.taglibs.Script</tag-class>
-            <body-content>empty</body-content>
-        </tag>
-        <tag>
-            <name>style</name>
-            <tag-class>sidd33.turboengine.forms.taglibs.Style</tag-class>
-            <body-content>empty</body-content>
-        </tag>
+    <tlib-version>1.0</tlib-version>
+    <short-name>turboforms</short-name>
+    <uri>sidd33/turboengine/forms</uri>
+    <tag>
+        <name>control</name>
+        <tag-class>sidd33.turboengine.forms.taglibs.FormControl</tag-class>
+        <dynamic-attributes>true</dynamic-attributes>
+        <body-content>empty</body-content>
+    </tag>
+    <tag>
+        <name>script</name>
+        <tag-class>sidd33.turboengine.forms.taglibs.Script</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+    <tag>
+        <name>style</name>
+        <tag-class>sidd33.turboengine.forms.taglibs.Style</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+    <tag>
+        <name>data</name>
+        <tag-class>sidd33.turboengine.forms.taglibs.FormData</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>data</name>
+            <type>sidd33.turboengine.forms.type.FormData</type>
+            <rtexprvalue>true</rtexprvalue>
+            <required>true</required>
+        </attribute>
+    </tag>
 </taglib>
 
